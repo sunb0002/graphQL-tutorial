@@ -32,9 +32,12 @@ const RootQuery = new GraphQLObjectType({
   fields: {
     // launches
     launches: {
+      args: {
+        first: { type: GraphQLInt }
+      },
       type: new GraphQLList(LaunchType),
       resolve(parent, args) {
-        return axios.get('https://api.spacexdata.com/v3/launches').then(res => res.data);
+        return axios.get(`https://api.spacexdata.com/v3/launches?limit=${args.first}`).then(res => res.data);
       }
     },
     launch: {
